@@ -1,0 +1,77 @@
+<p class="form_div" id="notice"><%= notice %></p>
+
+<h1 class="form_div">Labour Payment <%= link_to 'Add', new_labour_payment_path,:style=>"font-size: medium" %></h1>
+<%= form_tag labour_payments_path, method: :get do %> 
+  <div class="row form_div">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%=select_tag 'project_id', options_for_select(Project.where("is_active=1").collect{ |u| [u.name, u.id] },params[:project_id]), {:prompt => "--select project--",:style=>"width:100%"}%>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%=select_tag 'labour_type_id', options_for_select(LabourType.where("is_active=1").collect{ |u| [u.name, u.id] },params[:labour_type_id]), {:prompt => "--select labour type--",:style=>"width:100%"}%>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%=select_tag 'labour_id', options_for_select(Labour.where("is_active=1").collect{ |u| [u.name, u.id] },params[:labour_id]), {:prompt => "--select labour--",:style=>"width:100%"}%>
+    </div> 
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= date_field_tag :start_date,params[:start_date]%>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= date_field_tag :end_date,params[:end_date]%>
+    </div> 
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%= submit_tag "search"%>
+      <%= button_to "clear",labour_payments_path, :method => :get,:onclick=>"reload()" %>
+    </div>             
+  </div>
+  <% end %>
+
+<table id="labour_payment_tbl" class="form_div table table-striped table-condensed" style="width:90%">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Labour type</th>
+      <th>Labour</th>
+      <th>Date</th>
+      <th>Amount</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%if @labour_payments.present?%>
+    <% @labour_payments.each do |labour_payment| %>
+      <tr>
+        <td><%= labour_payment.project.name %></td>
+        <td><%= labour_payment.labour_type.name %></td>
+        <td><%= labour_payment.labour.name %></td>
+        <td><%= date_format(labour_payment.date) %></td>
+        <td><%= labour_payment.amount %></td>
+        <td><%= link_to 'Edit', edit_labour_payment_path(labour_payment) %></td>
+        <td><%= link_to 'Destroy', labour_payment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th colspan="3"></th>
+      <th>Total</th>
+      <th><%=@total%></th>
+      <th colspan="2"></th>
+    </tr>
+  <% else %>
+    <tr>
+    <th colspan="7">No Records Found</th>
+    </tr>
+  <% end %>    
+  </tbody>
+</table>
+
+<br>
+
+<script>
+function reload() {
+  jQuery("#project_id").val('')
+  jQuery("#labour_type_id").val('')
+  jQuery("#labour_id").val('')
+  jQuery("#start_date").val('')
+  jQuery("#end_date").val('')
+    }
+</script>

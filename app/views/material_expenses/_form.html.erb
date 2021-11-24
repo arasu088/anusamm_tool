@@ -1,0 +1,72 @@
+<%= form_with(model: material_expense) do |form| %>
+  <% if material_expense.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(material_expense.errors.count, "error") %> prohibited this material_expense from being saved:</h2>
+
+      <ul>
+        <% material_expense.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :project_id %>
+    <%= form.collection_select :project_id, Project.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :material_id %>
+    <%= form.collection_select :material_id, Material.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :supplier_id %>
+    <%= form.collection_select :supplier_id, Supplier.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date %>
+    <%= form.date_select :date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.text_field :quantity,:required=>true, onkeyup: 'calculate_total()' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :amount %>
+    <%= form.text_field :amount,:required=>true, onkeyup: 'calculate_total()' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gst %>
+    <%= form.text_field :gst %>
+  </div>
+
+  <div class="field">
+    <%= form.label :total_amount %>
+    <%= form.text_field :total_amount,:readonly=>true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+function calculate_total() {
+var q = parseFloat(jQuery("#material_expense_quantity").val())
+if(isNaN(q)) {
+ q = 0;
+}
+var amt = parseFloat(jQuery("#material_expense_amount").val())
+if(isNaN(amt)) {
+ amt = 0;
+}
+total=(q*amt).toFixed(1)
+jQuery("#material_expense_total_amount").val(total)
+}
+</script>

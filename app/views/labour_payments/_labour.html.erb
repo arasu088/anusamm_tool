@@ -1,0 +1,1 @@
+<%= form.collection_select :labour_id, Labour.where("is_active=1 and labour_type_id=?",@labour_type_id).order(:name),:id,:name, include_blank: true,:required=>true %>

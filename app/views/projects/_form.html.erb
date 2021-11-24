@@ -1,0 +1,51 @@
+<%= form_with(model: project) do |form| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% project.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name,:required=>true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :client_name %>
+    <%= form.text_field :client_name,:required=>true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.number_field :number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estimated_cost %>
+    <%= form.text_field :estimated_cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_active %>
+    <%if project.new_record? || project.is_active%>
+    <%= form.check_box :is_active,{checked: true} %>
+    <%else%>
+    <%= form.check_box :is_active,{checked: false} %>
+    <%end%>
+  </div>  
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

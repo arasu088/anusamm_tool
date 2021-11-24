@@ -1,0 +1,2 @@
+module LabourPaymentsHelper
+end

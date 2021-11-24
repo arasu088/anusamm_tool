@@ -1,0 +1,2 @@
+module LabourTypesHelper
+end

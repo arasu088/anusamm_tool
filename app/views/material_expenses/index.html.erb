@@ -1,0 +1,82 @@
+<p class="form_div" id="notice"><%= notice %></p>
+
+<h1 class="form_div">Material Expense <%= link_to 'Add', new_material_expense_path,:style=>"font-size: medium" %></h1>
+<%= form_tag material_expenses_path, method: :get do %> 
+<div class="row form_div">
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%=select_tag 'project_id', options_for_select(Project.where("is_active=1").collect{ |u| [u.name, u.id] },params[:project_id]), {:prompt => "--select project--",:style=>"width:100%"}%>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%=select_tag 'material_id', options_for_select(Material.where("is_active=1").collect{ |u| [u.name, u.id] },params[:material_id]), {:prompt => "--select material--",:style=>"width:100%"}%>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%=select_tag 'supplier_id', options_for_select(Supplier.where("is_active=1").collect{ |u| [u.name, u.id] },params[:supplier_id]), {:prompt => "--select supplier--",:style=>"width:100%"}%>
+  </div> 
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%= date_field_tag :start_date,params[:start_date]%>
+  </div>
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%= date_field_tag :end_date,params[:end_date]%>
+  </div> 
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+    <%= submit_tag "search"%>
+    <%= button_to "clear",material_expenses_path, :method => :get,:onclick=>"reload()" %>
+  </div>             
+</div>
+<% end %>
+<table id="material_expense_tbl" class="form_div table table-striped table-condensed" style="width:90%">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Material</th>
+      <th>Supplier</th>
+      <th>Date</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Gst</th>
+      <th>Amount</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%if @material_expenses.present?%>
+    <% @material_expenses.each do |material_expense| %>
+      <tr>
+        <td><%= material_expense.project.name %></td>
+        <td><%= material_expense.material.name %></td>
+        <td><%= material_expense.supplier.name %></td>
+        <td><%= date_format(material_expense.date) %></td>
+        <td><%= material_expense.quantity.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <td><%= material_expense.amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <td><%= material_expense.gst.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <td><%= material_expense.total_amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <td><%= link_to 'Edit', edit_material_expense_path(material_expense) %></td>
+        <td><%= link_to 'Delete', material_expense, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th colspan="6"></th>
+      <th>Total</th>
+      <th><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
+      <th colspan="2"></th>
+    </tr>
+  <% else %>
+    <tr>
+    <th colspan="10">No Records Found</th>
+    </tr>
+  <% end %> 
+  </tbody>
+</table>
+
+<br>
+
+<script>
+function reload() {
+  jQuery("#project_id").val('')
+  jQuery("#material_id").val('')
+  jQuery("#supplier_id").val('')
+  jQuery("#start_date").val('')
+  jQuery("#end_date").val('')
+    }
+</script>
