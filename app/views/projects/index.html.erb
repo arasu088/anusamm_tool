@@ -23,7 +23,7 @@
         <td><%= project.client_name %></td>
         <td><%= project.number %></td>
         <td><%= project.address %></td>
-        <td><%= project.estimated_cost %></td>
+        <td><%= project.estimated_cost.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= project.is_active %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
