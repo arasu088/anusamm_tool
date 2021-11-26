@@ -49,7 +49,7 @@
 #
 # The server-based syntax can be used to override options:
 # ------------------------------------
-server '13.58.8.97', user: 'ubuntu', roles: %w{web app db}
+server '13.58.8.97', user: 'ubuntu', roles: %w{app db web}
 set :ssh_options, { 
     forward_agent: true, 
       auth_methods: %w[publickey],

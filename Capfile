@@ -5,10 +5,12 @@ require "capistrano/setup"
 
 require "capistrano/deploy"
 
-require "capistrano/bundler"
-require "capistrano/rails/assets"
-require "capistrano/rails/migrations"
-require "capistrano/rbenv"
+require 'capistrano/rails'
+require 'capistrano/passenger'
+require 'capistrano/rbenv'
+
+set :rbenv_type, :user
+set :rbenv_ruby, '3.0.2'
 
 # Load the SCM plugin appropriate to your project:
 #
@@ -20,13 +22,6 @@ require "capistrano/rbenv"
 # or
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
-
-require 'capistrano/puma'
-install_plugin Capistrano::Puma  # Default puma tasks
-install_plugin Capistrano::Puma::Workers  # if you want to control the workers (in cluster mode)
-install_plugin Capistrano::Puma::Jungle # if you need the jungle tasks
-install_plugin Capistrano::Puma::Monit  # if you need the monit tasks
-install_plugin Capistrano::Puma::Nginx  # if you want to upload a nginx site template
 
 # Include tasks from other gems included in your Gemfile
 #
