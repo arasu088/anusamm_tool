@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Project:</strong>
+  <%= @abstract_quantity.project_id %>
+</p>
+
+<p>
+  <strong>Material:</strong>
+  <%= @abstract_quantity.material_id %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @abstract_quantity.quantity %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @abstract_quantity.amount %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @abstract_quantity.total %>
+</p>
+
+<%= link_to 'Edit', edit_abstract_quantity_path(@abstract_quantity) %> |
+<%= link_to 'Back', abstract_quantities_path %>

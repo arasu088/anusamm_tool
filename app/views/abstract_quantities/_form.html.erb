@@ -1,10 +1,10 @@
-<%= form_with(model: material_expense) do |form| %>
-  <% if material_expense.errors.any? %>
+<%= form_with(model: abstract_quantity) do |form| %>
+  <% if abstract_quantity.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(material_expense.errors.count, "error") %> prohibited this material_expense from being saved:</h2>
+      <h2><%= pluralize(abstract_quantity.errors.count, "error") %> prohibited this abstract_quantity from being saved:</h2>
 
       <ul>
-        <% material_expense.errors.each do |error| %>
+        <% abstract_quantity.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -22,16 +22,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :supplier_id %>
-    <%= form.collection_select :supplier_id, Supplier.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.date_select :date %>
-  </div>
-
-  <div class="field">
     <%= form.label :quantity %>
     <%= form.text_field :quantity,:required=>true, onkeyup: 'calculate_total()' %>
   </div>
@@ -42,13 +32,13 @@
   </div>
 
   <div class="field">
-    <%= form.label :gst %>
-    <%= form.text_field :gst,:required=>true, onkeyup: 'calculate_total()' %>
-  </div>
+  <%= form.label :gst %>
+  <%= form.text_field :gst,:required=>true, onkeyup: 'calculate_total()' %>
+</div>
 
   <div class="field">
-    <%= form.label :total_amount %>
-    <%= form.text_field :total_amount,:readonly=>true %>
+    <%= form.label :total %>
+    <%= form.text_field :total,:readonly=>true %>
   </div>
 
   <div class="actions">
@@ -58,19 +48,19 @@
 
 <script>
 function calculate_total() {
-var q = parseFloat(jQuery("#material_expense_quantity").val())
+var q = parseFloat(jQuery("#abstract_quantity_quantity").val())
 if(isNaN(q)) {
  q = 0;
 }
-var amt = parseFloat(jQuery("#material_expense_amount").val())
+var amt = parseFloat(jQuery("#abstract_quantity_amount").val())
 if(isNaN(amt)) {
  amt = 0;
 }
-var gst = parseFloat(jQuery("#material_expense_gst").val())
+var gst = parseFloat(jQuery("#abstract_quantity_gst").val())
 if(isNaN(gst)) {
   gst = 0;
 }
 total=((q*amt)+((q*amt)*(gst/100))).toFixed(1)
-jQuery("#material_expense_total_amount").val(total)
+jQuery("#abstract_quantity_total").val(total)
 }
 </script>

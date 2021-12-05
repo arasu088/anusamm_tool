@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_031656) do
+ActiveRecord::Schema.define(version: 2021_12_03_070055) do
+
+  create_table "abstract_quantities", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "material_id"
+    t.float "quantity"
+    t.float "amount"
+    t.float "total"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.float "gst"
+  end
 
   create_table "labour_payments", force: :cascade do |t|
     t.integer "project_id"

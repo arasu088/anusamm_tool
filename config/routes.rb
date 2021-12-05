@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'escalation/index'
+  resources :abstract_quantities
   resources :labour_payments do
     collection do
       get 'getlabour'

@@ -1,0 +1,2 @@
+module AbstractQuantitiesHelper
+end
