@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class="form_div">Material Types <%= link_to 'Add', new_material_type_path,:style=>"font-size: medium" %></h1>
+
+<table id="material_type_tbl" class="form_div table table-striped table-condensed" style="width:90%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Is active</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%if @material_types.present?%>
+    <% @material_types.each do |material_type| %>
+      <tr>
+        <td><%= material_type.name %></td>
+        <td><%= material_type.is_active %></td>
+        <td><%= link_to 'Edit', edit_material_type_path(material_type) %></td>
+        <td><%= link_to 'Destroy', material_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <% else %>
+    <tr>
+    <th colspan="4">No Records Found</th>
+    </tr>
+  <% end %>    
+  </tbody>
+</table>
+
+<br>

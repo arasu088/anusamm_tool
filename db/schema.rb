@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_070055) do
+ActiveRecord::Schema.define(version: 2021_12_05_122227) do
 
   create_table "abstract_quantities", force: :cascade do |t|
     t.integer "project_id"
@@ -62,11 +62,21 @@ ActiveRecord::Schema.define(version: 2021_12_03_070055) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "material_types", force: :cascade do |t|
+    t.string "name"
+    t.boolean "is_active"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "materials", force: :cascade do |t|
     t.string "name"
     t.boolean "is_active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "material_type_id"
+    t.string "unit"
+    t.index ["name", "unit", "material_type_id"], name: "index_materials_on_name_and_unit_and_material_type_id", unique: true
   end
 
   create_table "projects", force: :cascade do |t|

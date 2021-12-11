@@ -28,6 +28,7 @@
   <thead>
     <tr>
       <th>Project</th>
+      <th>Material Type</th>
       <th>Material</th>
       <th>Supplier</th>
       <th>Date</th>
@@ -44,6 +45,7 @@
     <% @material_expenses.each do |material_expense| %>
       <tr>
         <td><%= material_expense.project.name %></td>
+        <td><%= material_expense.material.material_type.name %></td>
         <td><%= material_expense.material.name %></td>
         <td><%= material_expense.supplier.name %></td>
         <td><%= date_format(material_expense.date) %></td>
@@ -56,14 +58,14 @@
       </tr>
     <% end %>
     <tr>
-      <th colspan="6"></th>
+      <th colspan="7"></th>
       <th>Total</th>
       <th><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
       <th colspan="2"></th>
     </tr>
   <% else %>
     <tr>
-    <th colspan="10">No Records Found</th>
+    <th colspan="11">No Records Found</th>
     </tr>
   <% end %> 
   </tbody>

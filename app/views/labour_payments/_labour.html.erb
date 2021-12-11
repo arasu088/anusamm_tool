@@ -1,1 +1,14 @@
-<%= form.collection_select :labour_id, Labour.where("is_active=1 and labour_type_id=?",@labour_type_id).order(:name),:id,:name, include_blank: true,:required=>true %>
+<%=select_tag "labour_id", options_from_collection_for_select(Labour.where("is_active=1 and labour_type_id=?",@labour_type_id).order(:name), "id", "name")%>
+
+<script>
+function get_labour() {
+  Rails.ajax({
+  url: "<%=getlabour_labour_payments_path%>",
+  type: "get",
+  data: "",
+  success: function(data) {},
+  error: function(data) {}
+})
+        }
+
+</script>

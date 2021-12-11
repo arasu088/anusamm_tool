@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :material_id %>
-    <%= form.collection_select :material_id, Material.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
+    <%= form.collection_select :material_id, Material.select("materials.id,mt.name || '---' || materials.name  as name").joins("inner join material_types mt on materials.material_type_id=mt.id").where("materials.is_active=1").order("mt.name,materials.name"),:id,:name, include_blank: true,:required=>true %>
   </div>
 
   <div class="field">
@@ -33,7 +33,7 @@
 
   <div class="field">
   <%= form.label :gst %>
-  <%= form.text_field :gst,:required=>true, onkeyup: 'calculate_total()' %>
+  <%= form.text_field :gst, onkeyup: 'calculate_total()' %>
 </div>
 
   <div class="field">

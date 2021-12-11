@@ -7,11 +7,14 @@ class AbstractQuantitiesController < ApplicationController
     if params[:project_id] && params[:project_id].to_i>0
       c<<"project_id=#{ params[:project_id].to_i}"
     end
+    if params[:material_type_id] && params[:material_type_id].to_i>0
+      c<<"m.material_type_id=#{ params[:material_type_id].to_i}"
+    end    
     if c.empty?
       @abstract_quantities = AbstractQuantity.all
     else
       c=c.join(' and ') 
-      @abstract_quantities = AbstractQuantity.where(c)
+      @abstract_quantities = AbstractQuantity.joins("inner join materials m on m.id=abstract_quantities.material_id").where(c)
     end        
     @total=@abstract_quantities.sum(:total)
   end

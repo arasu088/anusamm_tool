@@ -17,6 +17,17 @@
   </div>
 
   <div class="field">
+  <%= form.label :unit %>
+  <%= form.text_field :unit, required: true %>
+</div>
+
+  <div class="field">
+  <%= form.label :material_type %>
+  <%= form.collection_select :material_type_id, MaterialType.where("is_active=1").order(:name),:id,:name, include_blank: true,:required=>true %>
+
+</div>
+
+  <div class="field">
     <%= form.label :is_active %>
     <%if material.new_record? || material.is_active%>
     <%= form.check_box :is_active,{checked: true} %>

@@ -1,0 +1,31 @@
+<%= form_with(model: material_type) do |form| %>
+  <% if material_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(material_type.errors.count, "error") %> prohibited this material_type from being saved:</h2>
+
+      <ul>
+        <% material_type.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_active %>
+    <%if material_type.new_record? || material_type.is_active%>
+    <%= form.check_box :is_active,{checked: true} %>
+    <%else%>
+    <%= form.check_box :is_active,{checked: false} %>
+    <%end%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

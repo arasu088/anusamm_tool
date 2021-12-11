@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :material_types
   get 'escalation/index'
   resources :abstract_quantities
   resources :labour_payments do

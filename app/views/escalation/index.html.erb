@@ -7,6 +7,9 @@
       <%=select_tag 'project_id', options_for_select(Project.where("is_active=1").collect{ |u| [u.name, u.id] },params[:project_id]), {:prompt => "--select project--",:style=>"width:100%"}%>
     </div>
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%=select_tag 'material_type_id', options_for_select(MaterialType.where("is_active=1").collect{ |u| [u.name, u.id] },params[:material_type_id]), {:prompt => "--select material type--",:style=>"width:100%"}%>
+    </div>      
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <%= submit_tag "search"%>
       <%= button_to "clear",escalation_index_path, :method => :get,:onclick=>"reload()" %>
     </div>             
@@ -16,7 +19,9 @@
   <thead>
     <tr>
       <th>Project</th>
+      <th>Mat Type</th>
       <th>Material</th>
+      <th>Unit</th>
       <th>ABS Qty</th>
       <th>ABS Rate</th>
       <th>Est Expense</th>
@@ -32,7 +37,9 @@
     <% @escalations.each do |escalation| %>
       <tr>
         <td><%= escalation.project_name %></td>
+        <td><%= escalation.material_type %></td>
         <td><%= escalation.material_name %></td>
+        <td><%= escalation.unit %></td>
         <td><%= escalation.abs_quantity.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= escalation.abs_amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= escalation.est_expense.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
@@ -44,13 +51,13 @@
       </tr>
     <% end %>
     <tr>
-      <th colspan="7"></th>
+      <th colspan="9"></th>
       <th>Total</th>
       <th><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
     </tr>
   <% else %>
     <tr>
-    <th colspan="9">No Records Found</th>
+    <th colspan="11">No Records Found</th>
     </tr>
   <% end %>     
   </tbody>

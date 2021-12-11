@@ -79,6 +79,7 @@ class LabourPaymentsController < ApplicationController
   end
 
   def getlabour
+    raise params.inspect
     @labour_type_id=params[:labour_type_id].to_i
     respond_to do |format|
       format.js {}

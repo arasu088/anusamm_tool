@@ -7,6 +7,9 @@
       <%=select_tag 'project_id', options_for_select(Project.where("is_active=1").collect{ |u| [u.name, u.id] },params[:project_id]), {:prompt => "--select project--",:style=>"width:100%"}%>
     </div>
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <%=select_tag 'material_type_id', options_for_select(MaterialType.where("is_active=1").collect{ |u| [u.name, u.id] },params[:material_type_id]), {:prompt => "--select material type--",:style=>"width:100%"}%>
+    </div>    
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
       <%= submit_tag "search"%>
       <%= button_to "clear",abstract_quantities_path, :method => :get,:onclick=>"reload()" %>
     </div>             
@@ -16,7 +19,9 @@
   <thead>
     <tr>
       <th>Project</th>
+      <th>Material Type</th>
       <th>Material</th>
+      <th>Unit</th>
       <th>Quantity</th>
       <th>Amount</th>
       <th>GST</th>
@@ -30,7 +35,9 @@
     <% @abstract_quantities.each do |abstract_quantity| %>
       <tr>
         <td><%= abstract_quantity.project.name %></td>
+        <td><%= abstract_quantity.material.material_type.name %></td>
         <td><%= abstract_quantity.material.name %></td>
+        <td><%= abstract_quantity.material.unit %></td>
         <td><%= abstract_quantity.quantity.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= abstract_quantity.amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= abstract_quantity.gst.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
@@ -40,14 +47,14 @@
       </tr>
     <% end %>
     <tr>
-      <th colspan="4"></th>
+      <th colspan="6"></th>
       <th>Total</th>
       <th><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
       <th colspan="2"></th>
     </tr>
   <% else %>
     <tr>
-    <th colspan="8">No Records Found</th>
+    <th colspan="10">No Records Found</th>
     </tr>
   <% end %>     
   </tbody>
