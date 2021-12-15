@@ -8,10 +8,10 @@ class EscalationController < ApplicationController
       c<<"m.material_type_id=#{ params[:material_type_id].to_i}"
     end        
     @escalations=AbstractQuantity.select("p.name as project_name,mt.name as material_type,m.name as material_name,m.unit,aq.quantity as abs_quantity,aq.amount as abs_amount,
-    (aq.quantity*aq.amount) as est_expense,sum(me.quantity) as purchase_quantity,avg(me.amount) as purchase_rate,
-    sum(me.total_amount) as site_expense,(sum(me.total_amount)-(aq.quantity*aq.amount)) as escalation_amount")
+    (aq.quantity*aq.amount) as est_expense,ifnull(sum(me.quantity),0) as purchase_quantity,ifnull(avg(me.amount),0) as purchase_rate,
+    ifnull(sum(me.total_amount),0) as site_expense,((aq.quantity*aq.amount)-ifnull(sum(me.total_amount),0)) as escalation_amount")
     .joins("aq 
-    inner join material_expenses me on me.material_id=aq.material_id
+    left join material_expenses me on aq.material_id=me.material_id
     and me.project_id=aq.project_id
     inner join materials m on m.id=aq.material_id
     inner join material_types mt on mt.id=m.material_type_id

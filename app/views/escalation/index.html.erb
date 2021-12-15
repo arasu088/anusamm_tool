@@ -15,7 +15,7 @@
     </div>             
   </div>
   <% end %>
-<table id="escalation_tbl" class="form_div table table-striped table-condensed" style="width:90%">
+<table id="escalation_tbl" class="form_div table table-striped table-condensed" style="width:95%">
   <thead>
     <tr>
       <th>Project</th>
@@ -24,11 +24,11 @@
       <th>Unit</th>
       <th>ABS Qty</th>
       <th>ABS Rate</th>
-      <th>Est Expense</th>
-      <th>Purchase Qty</th>
-      <th>Purchase Rate</th>
-      <th>Site Expense</th>
-      <th>Escalation Amt</th>
+      <th>Est Exp</th>
+      <th>Purch Qty</th>
+      <th>Purch Rate</th>
+      <th>Site Exp</th>
+      <th>Profit/Loss</th>
     </tr>
   </thead>
 
@@ -47,13 +47,22 @@
         <td><%= escalation.purchase_rate.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <td><%= escalation.site_expense.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
         <%@total+=escalation.escalation_amount%>
-        <td><%= escalation.escalation_amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <%if escalation.escalation_amount>0%>
+          <td style="color:darkgreen"><%= escalation.escalation_amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <%else%>
+          <td style="color:red"><%= escalation.escalation_amount.tap{|x| break x.to_i == x ? x.to_i : x} %></td>
+        <%end%>
       </tr>
     <% end %>
     <tr>
-      <th colspan="9"></th>
-      <th>Total</th>
-      <th><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
+      <th colspan="9"></th>      
+      <%if @total>0%>
+        <th>Profit</th>
+        <th style="color:darkgreen"><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
+      <%else%>
+        <th>Loss</th>
+        <th style="color:red"><%=@total.tap{|x| break x.to_i == x ? x.to_i : x}%></th>
+      <%end%>            
     </tr>
   <% else %>
     <tr>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :material_types
   get 'escalation/index'
   resources :abstract_quantities
